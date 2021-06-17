@@ -1,13 +1,44 @@
 export const testType = [
-  { id: "1", name: "Add Question", value: "addQuestion" },
-  { id: "2", name: "Remove Question", value: "removeQuestion" },
-  { id: "3", name: "Move Address to Final Frame", value: "addressToFF" },
-  { id: "4", name: "Move Email to Final Frame", value: "emailToFF" },
+  {
+    id: "1",
+    test: "Add Question",
+    value: "addQuestion",
+    testFunctions: ["addQuestion"],
+  },
+  {
+    id: "2",
+    test: "Remove Question",
+    value: "removeQuestion",
+    testFunctions: ["removeQuestion"],
+  },
+  {
+    id: "3",
+    test: "Move Address to Final Frame",
+    value: "addressToFF",
+    testFunctions: ["alterConfig", "removeQuestion"],
+  },
+  {
+    id: "4",
+    test: "Move Email to Final Frame",
+    value: "emailToFF",
+    testFunctions: ["alterConfig", "removeQuestion"],
+  },
   {
     id: "5",
-    name: "Move Email and Address to Final Frame",
+    test: "Move Email and Address to Final Frame",
     value: "emailAndAddresstoFF",
+    testFunctions: ["alterConfig", "removeQuestion"],
   },
-  { id: "6", name: "Reorder Questions", value: "reorderQuestions" },
-  { id: "7", name: "Combine Birthdate", value: "combineBirthday" },
+  {
+    id: "6",
+    test: "Reorder Questions",
+    value: "reorderQuestions",
+    testFunctions: ["alterQuestion"],
+  },
+  {
+    id: "7",
+    test: "Combine Birthdate",
+    value: "combineBirthday",
+    testFunctions: ["addQuestion", "removeQuestion"],
+  },
 ];
