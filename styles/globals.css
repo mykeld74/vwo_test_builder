@@ -24,3 +24,19 @@ a {
 * {
   box-sizing: border-box;
 }
+aside {
+  min-height: 100vh;
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.headline {
+  background: var(--defaultTextColor);
+  color: var(--defaultBackgroundColor);
+  width: 100%;
+  padding: 1vh 0;
+  margin-bottom: 3vh;
+}

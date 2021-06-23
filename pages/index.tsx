@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Container, Grid, Heading, Textarea } from "@chakra-ui/react";
-import Card from "../components/card";
-import { testType } from "./api/tests";
-import VWOTestCode from "../components/vwoTestCode";
+import { Container, Heading, Button, Grid } from "@chakra-ui/react";
+import { testType } from "../api/tests";
+import HeadlineUpdate from "../components/headline";
+import AddQuestion from "../components/addQuestion";
 
 export const getStaticProps = async () => {
   return {
@@ -22,37 +22,13 @@ interface Tests {
 }
 
 export default function Home({ testTypes }) {
-  const [testsDesired, setTestsDesired] = useState([]);
+  const [testDesired, setTestDesired] = useState("");
+
   let TestArray = [];
   let TestsToRun: Array<string> = [];
 
-  const handleAdd = (id, test, value, testFunctions) => {
-    const newTests = testsDesired.concat({
-      id,
-      test,
-      value,
-      testFunctions,
-    });
-
-    setTestsDesired(newTests);
-    newTests.map((requiredTests) =>
-      TestArray.push(...requiredTests.testFunctions)
-    );
-    TestsToRun = [...new Set(TestArray)];
-    // console.log({ TestsToRun });
-  };
-
-  const handleRemove = (id, testFunctions) => {
-    const newTests = testsDesired.filter((item) => item.id !== id);
-    setTestsDesired(newTests);
-    newTests.map((requiredTests) =>
-      TestArray.push(...requiredTests.testFunctions)
-    );
-    TestsToRun = [...new Set(TestArray)];
-    // console.log({ TestsToRun });
-  };
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>VWO Test Builder</title>
         <meta
@@ -61,53 +37,35 @@ export default function Home({ testTypes }) {
         />
         <link rel="icon" href="/suitedConnectorLogo.png" />
       </Head>
-
-      <Container maxW="container.lg">
-        <Heading fontSize="var(--h1)" textAlign="center">
-          VWO Test Generator
-        </Heading>
-        <Grid templateColumns="repeat(2, 1fr)" gap={6} w="100%">
-          <Grid templateColumns="1fr" gap={6}>
+      <Heading fontSize="var(--h1)" textAlign="center" className="headline">
+        VWO Test Generator
+      </Heading>
+      <Container style={{ width: "100%", maxWidth: "100%" }}>
+        <Grid templateColumns="1fr 3fr">
+          <aside>
             {testTypes.map((test: Tests) => (
-              <Card
+              <Button
                 key={test.id}
-                id={test.id}
-                test={test.test}
-                value={test.value}
-                testFunctions={test.testFunctions}
-                addItem={handleAdd}
-                removeItem={handleRemove}
-              ></Card>
+                size="sm"
+                marginTop="20px"
+                colorScheme="orange"
+                width="100%"
+                onClick={() => {
+                  setTestDesired(test.value);
+                }}
+              >
+                {test.test}
+              </Button>
             ))}
-          </Grid>
-          <Grid>
-            {testsDesired.length <= 0 ? (
-              <Heading fontSize="var(--h4)">
-                Please choose your test(s):
-              </Heading>
-            ) : (
-              <div>
-                <Heading fontSize="var(--h4)">Tests Selected:</Heading>
-                {/* {console.log({ testsDesired })} */}
-                <div>
-                  {testsDesired.map((testsSelected) => (
-                    <p key={testsSelected.id}>{testsSelected.test}</p>
-                  ))}
-                </div>
-                <Textarea
-                  value={VWOTestCode(testsDesired)}
-                  id="vwoCode"
-                  className="vwoTestInput"
-                  readOnly={true}
-                  style={{ height: "85vh", whiteSpace: "pre-wrap" }}
-                />
-              </div>
-            )}
-          </Grid>
+          </aside>
+          <Container maxWidth="100%">
+            {testDesired === "HeadlineUpdate" && <HeadlineUpdate />}
+            {testDesired === "addQuestion" && <AddQuestion />}
+          </Container>
         </Grid>
       </Container>
 
       <footer className={styles.footer}></footer>
-    </div>
+    </>
   );
 }

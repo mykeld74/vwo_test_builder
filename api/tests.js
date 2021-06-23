@@ -1,5 +1,11 @@
 export const testType = [
   {
+    id: "0",
+    test: "Change Headline",
+    value: "HeadlineUpdate",
+    testFunctions: ["updateConfig"],
+  },
+  {
     id: "1",
     test: "Add Question",
     value: "addQuestion",
