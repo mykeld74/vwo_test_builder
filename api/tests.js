@@ -17,18 +17,18 @@ export const testType = [
     value: "removeQuestion",
     testFunctions: ["removeQuestion"],
   },
-  {
-    id: "3",
-    test: "Move Address to Final Frame",
-    value: "addressToFF",
-    testFunctions: ["alterConfig", "removeQuestion"],
-  },
-  {
-    id: "4",
-    test: "Move Email to Final Frame",
-    value: "emailToFF",
-    testFunctions: ["alterConfig", "removeQuestion"],
-  },
+  // {
+  //   id: "3",
+  //   test: "Move Address to Final Frame",
+  //   value: "addressToFF",
+  //   testFunctions: ["alterConfig", "removeQuestion"],
+  // },
+  // {
+  //   id: "4",
+  //   test: "Move Email to Final Frame",
+  //   value: "emailToFF",
+  //   testFunctions: ["alterConfig", "removeQuestion"],
+  // },
   {
     id: "5",
     test: "Move Email and Address to Final Frame",
@@ -39,7 +39,7 @@ export const testType = [
     id: "6",
     test: "Reorder Questions",
     value: "reorderQuestions",
-    testFunctions: ["alterQuestion"],
+    testFunctions: ["alterQuestions"],
   },
   {
     id: "7",

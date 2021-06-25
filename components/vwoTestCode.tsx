@@ -2,18 +2,44 @@ import React from "react";
 import { Textarea, Button } from "@chakra-ui/react";
 import { useClipboard } from "use-clipboard-copy";
 
-const VWOCode = (runTest, testFunctions = []) => {
+const VWOCode = ({ runTest, currentTests }) => {
   const clipboard = useClipboard({ copiedTimeout: 5000 });
-  const testsFunctions = testFunctions.length >= 1 ? testFunctions : "";
+  let runScripts;
+  let checkScripts;
+  switch (currentTests) {
+    case "addQuestion":
+      runScripts = `var isAlterConfig = typeof window.alterConfig === 'function';
+      var isAddQuestion = typeof window.addQuestion === 'function';`;
+      checkScripts = `isAlterConfig && isAddQuestion`;
+      break;
+    case "removeQuestion":
+      runScripts = `    var isAlterConfig = typeof window.alterConfig === 'function';
+            var isRemoveQuestion = typeof window.removeQuestion === 'function';`;
+      checkScripts = `isAlterConfig && isRemoveQuestion`;
+      break;
+    case "emailAndAddresstoFF":
+      runScripts = `    var isAlterConfig = typeof window.alterConfig === 'function';
+            var isRemoveQuestion = typeof window.removeQuestion === 'function';`;
+      checkScripts = `isAlterConfig && isRemoveQuestion`;
+      break;
+    case "reorderQuestions":
+      runScripts = `    var isAlterConfig = typeof window.alterConfig === 'function';
+            var isAlterQuestions = typeof window.alterQuestions === 'function';`;
+      checkScripts = `isAlterConfig && isAlterQuestions`;
+      break;
+    default:
+      runScripts = `var isAlterConfig = typeof window.alterConfig === 'function';`;
+      checkScripts = "isAlterConfig";
+  }
+
   const codeVariation = `(function () {
     if (!window.vwoTestFired) {
       var pollWin = setInterval(function () {
-        var isAlterConfig = typeof window.alterConfig === 'function';
-        ${testsFunctions}    
+        ${runScripts}    
         if (
-          isAlterConfig 
+          ${checkScripts}
         ) {
-         ${runTest.runTest}
+         ${runTest}
           console.log('running test...');
   
           alterConfig('hiddenFields', [
@@ -47,17 +73,8 @@ const VWOCode = (runTest, testFunctions = []) => {
     }
   })();`;
 
-  console.log(runTest.runTest);
-
   return (
     <>
-      <Textarea
-        value={codeVariation}
-        readOnly
-        ref={clipboard.target}
-        style={{ minHeight: "70vh" }}
-        marginTop="10px"
-      />
       <Button
         onClick={clipboard.copy}
         size="lg"
@@ -109,6 +126,13 @@ const VWOCode = (runTest, testFunctions = []) => {
           </>
         )}
       </Button>
+      <Textarea
+        value={codeVariation}
+        readOnly
+        ref={clipboard.target}
+        style={{ minHeight: "70vh" }}
+        marginTop="10px"
+      />
     </>
   );
 };

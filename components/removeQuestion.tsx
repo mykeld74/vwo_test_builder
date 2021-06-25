@@ -3,38 +3,30 @@ import { Container, Heading, Input, Select } from "@chakra-ui/react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import VWOCode from "./vwoTestCode";
 
-export default function AddQuestion({ testFunctions }) {
-  const [newQuestion, setNewQuestion] = useState("");
-  const [position, setPosition] = useState("");
+export default function RemoveQuestion({ testFunctions }) {
+  const [removeQuestion, setRemoveQuestion] = useState("");
   const [path, setPath] = useState("");
 
-  const addedQuestion =
+  const removedQuestion =
     path === "both" || path === "" || path === undefined
-      ? `addQuestion("${newQuestion}", ${position});`
-      : `addQuestion("${newQuestion}", ${position}, "${path}")`;
+      ? `removeQuestion("${removeQuestion}");`
+      : `removeQuestion("${removeQuestion}", "${path}")`;
   return (
     <div>
       <Heading fontSize="var(--h3)" textAlign="center" className="headline">
-        Add a Question
+        Remove a Question
       </Heading>
       <Container maxW="container.lg">
         <>
-          <label htmlFor="question">What Question would you like to add?</label>
+          <label htmlFor="question">
+            What Question would you like to remove?
+          </label>
           <Input
             name="question"
             id="question"
-            placeholder="New Question"
+            placeholder="Remove Question"
             required
-            onChange={(e) => setNewQuestion(e.target.value)}
-          />
-          <label htmlFor="position">What question number should this be?</label>
-          <Input
-            name="position"
-            id="position"
-            type="number"
-            placeholder="Question Number"
-            onChange={(e) => setPosition(e.target.value)}
-            required
+            onChange={(e) => setRemoveQuestion(e.target.value)}
           />
           <label htmlFor="path">Which path?</label>
           <Select
@@ -50,8 +42,8 @@ export default function AddQuestion({ testFunctions }) {
             <option value="med">Med</option>
           </Select>
 
-          {newQuestion && position && (
-            <VWOCode runTest={addedQuestion} currentTests={testFunctions} />
+          {removeQuestion && (
+            <VWOCode runTest={removedQuestion} currentTests={testFunctions} />
           )}
         </>
       </Container>

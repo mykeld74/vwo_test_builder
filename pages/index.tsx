@@ -5,6 +5,10 @@ import { Container, Heading, Button, Grid } from "@chakra-ui/react";
 import { testType } from "../api/tests";
 import HeadlineUpdate from "../components/headline";
 import AddQuestion from "../components/addQuestion";
+import RemoveQuestion from "../components/removeQuestion";
+import AddressEmailFF from "../components/moveAddressAndEmailtoFF";
+import MoveQuestion from "../components/moveQuestion";
+import CombineBirthdate from "../components/combineBirthdate";
 
 export const getStaticProps = async () => {
   return {
@@ -23,6 +27,7 @@ interface Tests {
 
 export default function Home({ testTypes }) {
   const [testDesired, setTestDesired] = useState("");
+  const [testValue, setTestValue] = useState("");
 
   let TestArray = [];
   let TestsToRun: Array<string> = [];
@@ -52,6 +57,7 @@ export default function Home({ testTypes }) {
                 width="100%"
                 onClick={() => {
                   setTestDesired(test.value);
+                  setTestValue(test.value);
                 }}
               >
                 {test.test}
@@ -60,7 +66,21 @@ export default function Home({ testTypes }) {
           </aside>
           <Container maxWidth="100%">
             {testDesired === "HeadlineUpdate" && <HeadlineUpdate />}
-            {testDesired === "addQuestion" && <AddQuestion />}
+            {testDesired === "addQuestion" && (
+              <AddQuestion testFunctions={testDesired} />
+            )}
+            {testDesired === "removeQuestion" && (
+              <RemoveQuestion testFunctions={testDesired} />
+            )}
+            {testDesired === "emailAndAddresstoFF" && (
+              <AddressEmailFF testFunctions={testDesired} />
+            )}
+            {testDesired === "reorderQuestions" && (
+              <MoveQuestion testFunctions={testDesired} />
+            )}
+            {testDesired === "combineBirthday" && (
+              <CombineBirthdate testFunctions={testDesired} />
+            )}
           </Container>
         </Grid>
       </Container>
